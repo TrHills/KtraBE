@@ -1,0 +1,22 @@
+﻿@model _23DH111065_TaTrungHieu_KtraFE_TH_.Models.Product
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="bg-info">XOÁ SẢN PHẨM</h2>
+
+<h4 class="text-danger">Bạn thực sự muốn xoá sản phẩm này à?</h4>
+@Html.Partial("PVProductInfo", Model)
+<div style="padding: 5px">
+    <div class="form-actions no-color">
+        <input type="submit" value="Xoá" class="btn btn-primary btn-sm" /> |
+        @Html.ActionLink("Quay Lại Danh Sách", "Index", null, new { @class = "btn btn-primary btn-sm" })
+    </div>
+</div>
+@*@using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+
+
+    }*@

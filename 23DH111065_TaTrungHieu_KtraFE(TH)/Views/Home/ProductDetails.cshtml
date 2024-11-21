@@ -1,0 +1,185 @@
+﻿@model _23DH111065_TaTrungHieu_KtraFE_TH_.Models.ViewModel.ProductDetailsVM
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Layout container */
+.container-fluid.prod {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.div-horizontal {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Section bên trái (Ảnh sản phẩm) */
+.pro-section img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    height: 350px;
+}
+
+/* Section giữa (Thông tin sản phẩm) */
+.pro-section h4 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.pro-sale {
+    font-size: 16px;
+    color: #777;
+}
+
+.pro-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.pro-section p {
+    margin-bottom: 15px;
+}
+
+.pro-section hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+/* Phần mô tả */
+.pro-section h5 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.pro-section .form-group {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pro-section .form-group h4 {
+    font-size: 18px;
+    color: #333;
+}
+
+.pro-section .form-group p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* Styling cho nút thêm vào giỏ hàng */
+.btn-info {
+    background-color: #3498db;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.btn-info:hover {
+    background-color: #2980b9;
+}
+
+/* Khối bên phải (Form tạm tính) */
+.pro-section .form-group input[type="number"] {
+    width: 60px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.pro-section .form-group input[type="number"]:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+</style>
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ProductDetails</title>
+</head>
+<body>
+    <div class="container-fluid prod">
+        <div class="div-horizontal">
+            @*Khối bên trái*@
+            <div class="col-md-3 pro-section">
+                <img src="@Model.product.ProductImage" />
+            </div>
+            @*Khối ở giữa*@
+            <div class="col-md-5 pro-section">
+                @*Phân thông tin*@
+                <div>
+                    <h4><strong>@Html.DisplayFor(model => model.product.ProductName) </strong></h4>
+                    <p class=" pro-sale">Đã bán : &nbsp;@Model.product.OrderDetails.Count</p>
+                    <p class=" pro-price"><font>@String.Format("{0:#,0}", @Model.product.ProductPrice@*@Html.DisplayFor(modelItem => product.ProductPrice)*@) VNĐ </font></p>
+                    <p>Tủ sách: &nbsp;@Model.product.Category.CategoryName</p>
+                    <hr />
+                    <h5><strong>Mô Tả</strong></h5>
+                    <p>@Model.product.ProductDescription</p>
+                </div>
+                <hr />
+                @*KHối realatedproduct*@
+                @*<div>@Html.Partial("_PVRelatedProduct", Model)</div>*@
+            </div>
+            @*Khối bên phải*@
+            <div class="col-md-3 pro-section">
+                <div class="form-group">
+                    @*Phần tạm tính*@
+                    @using (Html.BeginForm("ProductDetails", "Home", FormMethod.Get))
+                    {
+                        <h4><strong>Số lượng</strong></h4>
+                        <p>@Html.TextBoxFor(model => model.quantity, new { @class = "form-control", @type = "number", @min = 1 })</p>
+                        <h4><strong>Tạm tính</strong></h4>
+                        <p><font>@String.Format("{0:#,0}", @Model.estimatedValue@*@Html.DisplayFor(modelItem => product.ProductPrice)*@) VNĐ </font>@*.ToString("NO")*@</p>
+                        <p>
+                            @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "Cart",
+                           new { id = Model.product.ProductID, quantity = Model.quantity },
+                           new { @class = "btn btn-primary" }
+
+                                )
+                        </p>
+                    }
+                    <hr />
+                </div>
+                @*<div>@Html.Partial("_PVTopProduct", Model)</div>*@
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿@model _23DH111065_TaTrungHieu_KtraFE_TH_.Models.Product
+
+<head>
+    <style>
+        img {
+            height: 400px;
+            max-width: 400px;
+        }
+    </style>
+</head>
+
+<div class="container-fluid">
+    <div class="dl-horizontal">
+        <div class="col-md-4">
+            <img src="@Html.DisplayFor(model => model.ProductImage)" />
+        </div>
+        <div class="col-md-8">
+            <dl>
+                <dt> Tên Sản Phẩm </dt>
+                <dd> @Html.DisplayFor(model => model.ProductName)</dd>
+
+                <dt>Đơn Giá</dt>
+                <dd> @Html.DisplayFor(model => model.ProductPrice)</dd>
+
+                <dt>Mô Tả </dt>
+                <dd>@Html.DisplayFor(model => model.ProductDescription)</dd>
+
+                <dt> Danh Mục </dt>
+                <dd> @Html.DisplayFor(model => model.Category.CategoryName) </dd>
+            </dl>
+        </div>
+    </div>
+</div>

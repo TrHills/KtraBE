@@ -1,0 +1,56 @@
+﻿@model _23DH111065_TaTrungHieu_KtraFE_TH_.Models.ViewModel.HomeProductVM
+
+@{
+    ViewBag.Title = "Customer Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link rel="stylesheet" type="text/css" href="~/Content/myStyle/CustomerHome.css" />
+}
+
+@*PHẦN BANNER*@
+<div class="banner-content">
+    <div class="slideshow-container">
+        <img class="slideshow-image active" src="~/Img/ads/1.jpg" />
+        <img class="slideshow-image " src="~/Img/ads/2.png" />
+        <img class="slideshow-image " src="~/Img/ads/3.png" />
+        <img class="slideshow-image " src="~/Img/ads/4.jpg" />
+        <img class="slideshow-image " src="~/Img/ads/5.jpg" />
+        <img class="slideshow-image " src="~/Img/ads/6.png" />
+        <img class="slideshow-image " src="~/Img/ads/7.jpg" />
+        <img class="slideshow-image " src="~/Img/ads/8.png" />
+        <img class="slideshow-image " src="~/Img/ads/9.png" />
+        <img class="slideshow-image " src="~/Img/ads/10.jpg" />
+        <div class="dot-container">
+            <span class="dot active-dot" onclick="showImage(0)"></span>
+            <span class="dot" onclick="showImage(1)"></span>
+            <span class="dot" onclick="showImage(2)"></span>
+            <span class="dot" onclick="showImage(3)"></span>
+            <span class="dot" onclick="showImage(4)"></span>
+            <span class="dot" onclick="showImage(5)"></span>
+            <span class="dot" onclick="showImage(6)"></span>
+            <span class="dot" onclick="showImage(7)"></span>
+            <span class="dot" onclick="showImage(8)"></span>
+            <span class="dot" onclick="showImage(9)"></span>
+        </div>
+    </div>
+    <h2><br />CHÀO MỪNG ĐẾN VỚI TRANG WEB SỐ 1 VIỆT NAM</h2>
+    <p>Hàng Ngàn Sản Phẩm Đang Được Rao Bán</p>
+    <a href="#" class="btn">Bắt đầu mua sắm</a>
+</div>
+@*PHẦN TÌM KIẾM SẢN PHẨM*@
+<section class="container-fluid searchProd">
+    <h2>Tìm kiếm sản phẩm</h2>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+    {
+        <div class="form-group search-container">
+            @Html.TextBoxFor(m => m.SearchTerm, new
+       {
+           @class = " search-input",
+           placeholder = "Nhập tên, mô tả hoặc chủng loại sản phẩm"
+       })
+            <button type="submit" class="search-button">Tìm Kiếm</button>
+        </div>
+    }
+</section>
+@*PHẦN SẢN PHẨM NỔI BẬT*@
+
+

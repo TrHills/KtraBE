@@ -1,0 +1,129 @@
+﻿@model  _23DH111065_TaTrungHieu_KtraFE_TH_.Models.ViewModel.HomeProductVM
+@using PagedList.Mvc;
+<link rel="stylesheet" type="text/css" href="~/Content/myStyle/CustomerHome.css" />
+
+<style>
+    .list-container {
+        display: flex;
+        flex-wrap: wrap; /* Cho phép các sản phẩm xuống hàng nếu không đủ chỗ */
+        justify-content: space-between; /* Căn đều các sản phẩm */
+        gap: 20px; /* Khoảng cách giữa các sản phẩm */
+    }
+
+    /* Style cho mỗi sản phẩm */
+    .lproduct-item {
+        flex: 1 0 21%; /* Điều chỉnh kích thước sản phẩm. Đây là kiểu flexbox cho phép mỗi sản phẩm chiếm 21% chiều rộng */
+        min-width: 200px; /* Kích thước tối thiểu cho mỗi sản phẩm */
+        list-style: none;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 10px;
+        box-sizing: border-box;
+        text-align: center;
+        border-radius: 5px;
+    }
+
+        /* Style cho hình ảnh sản phẩm */
+        .lproduct-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+    /* Style cho giá sản phẩm */
+    .prodPrice {
+        font-weight: bold;
+        color: #e74c3c;
+        margin-top: 10px;
+    }
+
+    /* Style cho tên sản phẩm */
+    .prodName {
+        margin: 5px 0;
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+
+    /* Style cho số lượng đã bán */
+    .prodSale {
+        font-size: 0.9em;
+        color: #7f8c8d;
+    }
+
+    /* Style cho nút phân trang */
+    .pagination-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        /* Cải thiện giao diện các nút phân trang */
+        .pagination-container a,
+        .pagination-container span {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 8px 15px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #3498db;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+            .pagination-container a:hover {
+                background-color: #2980b9;
+            }
+
+        .pagination-container span {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        /* Style cho trang đầu và trang cuối */
+        .pagination-container .first, .pagination-container .last {
+            background-color: #2c3e50;
+        }
+</style>
+<!--Hiển thị danh sách sản phẩm-->
+@if (Model.NewProducts != null && Model.NewProducts.Any())
+{
+    <section class="container-fluid listProduct">
+        <h2>Sản phẩm mới</h2>
+        <ul class="list-container">
+            @foreach (var product in Model.NewProducts)
+            {
+                <li class="lproduct-item">
+                    <div>
+                        <a href="@Url.Action("ProductDetail", "Home", new { id=product.ProductID})">
+                            <img src="@Html.DisplayFor(modelItem => product.ProductImage)" />
+
+                        </a>
+                    </div>
+                    <div>
+
+                        <p class="prodPrice"><font>@String.Format("{0:#,0}", product.ProductPrice @*@Html.DisplayFor(modelItem => product.ProductPrice)*@) VNĐ </font></p>
+                        <p class="prodName">@Html.DisplayFor(modelItem => product.ProductName) </p>
+                        <p class="prodSale">
+                            Đã bán: &nbsp; @Html.DisplayFor(modelItem => product.OrderDetails.Count)
+                        </p>
+                        <div class="button-container">
+                            <a class="button button-details" style="text-decoration:none" href="/Home/ProductDetails/@product.ProductID">
+                                <b>Xem chi tiết</b>
+                            </a>
+                        </div>
+                    </div>
+                    
+                </li>
+            }
+
+        </ul>
+    </section>
+    <div class="pagination-container">
+        @Html.PagedListPager(Model.NewProducts, page => Url.Action("Index", new
+   {
+       page, searchTerm = Model.SearchTerm }))
+    </div>
+}
+else
+            {
+                <p>Không tìm được sản phẩm phù hợp.</p>
+            }

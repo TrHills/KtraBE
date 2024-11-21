@@ -1,0 +1,311 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+    @{ var user = Session["Username"] as _23DH111065_TaTrungHieu_KtraFE_TH_.Models.User;}
+    <style>
+        .logo span:nth-child(1) {
+            color: red;
+        }
+
+        .logo span:nth-child(2) {
+            color: orange;
+        }
+
+        .logo span:nth-child(3) {
+            color: yellow;
+        }
+
+        .logo span:nth-child(4) {
+            color: green;
+        }
+
+        .logo span:nth-child(5) {
+            color: blue;
+        }
+
+        .logo span:nth-child(6) {
+            color: purple;
+        }
+    </style>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <div class="container d-flex align-items-center">
+            @*<img src="~/Img/logo web.png" / style="width:4%;">*@
+            <a class="navbar-brand logo d-flex align-items-center" style="font-size:150%;">
+                <b><span>F</span><span>r</span><span>i</span><span>e</span><span>n</span><span>d</span> Ship</b>
+            </a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("Trang Chủ", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Sản Phẩm", "ProductList", "Products", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Liên Hệ", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+            <style>
+                .nav, .DangNhap {
+                    display: flex;
+                    border-radius: 20px;
+                    height: 40px;
+                    width: 130px;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 18px;
+                    background-color: wheat;
+                    border: none;
+                    cursor: pointer;
+                }
+
+                    .nav:hover, .DangNhap:hover {
+                        background-color: #c3f1f9;
+                    }
+
+                    .nav:active, .DangNhap:active {
+                        background-color: #a0e3f5;
+                    }
+
+                    .nav a, .DangNhap a {
+                        text-decoration: none;
+                        color: black;
+                        font-weight: bold;
+                    }
+
+                /* Style for account dropdown */
+                .account-dropdown {
+                    position: relative;
+                    display: inline-block;
+                }
+
+                    .account-dropdown:hover .dropdown-menu {
+                        display: block;
+                    }
+
+                .dropdown-menu {
+                    display: none;
+                    position: absolute;
+                    background-color: wheat;
+                    border-radius: 5px;
+                    top: 100%;
+                    left: 0;
+                    width: 200px;
+                    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+                    z-index: 1;
+                }
+
+                    .dropdown-menu li {
+                        padding: 10px;
+                        text-align: center;
+                    }
+
+                    .dropdown-menu a {
+                        color: black;
+                        text-decoration: none;
+                        font-weight: bold;
+                    }
+
+                    .dropdown-menu li:hover {
+                        background-color: #c3f1f9;
+                    }
+
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f8f9fa;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .search-bar {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: white;
+                    padding: 5px;
+                    border-radius: 30px;
+                    width: 100%;
+                    max-width: 300px;
+                    margin: 0 auto;
+                    position: relative;
+                }
+
+                    .search-bar form {
+                        display: flex;
+                        width: 400px;
+                        position: relative;
+                    }
+
+                    .search-bar input[type="text"] {
+                        width: 100%;
+                        padding: 10px 40px 10px 20px;
+                        border: none;
+                        border-radius: 30px;
+                        font-size: 16px;
+                        outline: none;
+                    }
+
+                    .search-bar button {
+                        position: absolute;
+                        right: 10px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background-color: transparent;
+                        border: none;
+                        cursor: pointer;
+                        padding: 0;
+                    }
+
+                        .search-bar button i {
+                            font-size: 20px;
+                            color: #333;
+                        }
+
+                /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+                .nav, .DangNhap {
+                    display: flex;
+                    border-radius: 20px;
+                    height: 40px;
+                    width: 130px;
+                    align-items: center;
+                    justify-content: center; /* Căn giữa nội dung */
+                    font-size: 18px;
+                    background-color: wheat;
+                    border: none;
+                    cursor: pointer;
+                }
+
+                    /* Thêm hiệu ứng hover cho cả hai nút */
+                    .nav:hover, .DangNhap:hover {
+                        background-color: #c3f1f9;
+                    }
+
+                    /* Thêm hiệu ứng khi nút đang được nhấn */
+                    .nav:active, .DangNhap:active {
+                        background-color: #a0e3f5;
+                    }
+
+                    /* Thêm kiểu cho văn bản trong nút */
+                    .nav a, .DangNhap a {
+                        text-decoration: none;
+                        color: black;
+                        font-weight: bold;
+                    }
+
+                /* Nếu cần có thêm padding cho nút để chữ không bị sát quá */
+                .nav, .DangNhap {
+                    padding: 0 15px;
+                }
+            </style>
+            <div><p>ㅤ</p></div>
+
+            <div class="account-dropdown">
+
+                <button class="nav">
+                    <a href="#">Tài Khoản</a>
+                </button>
+                <ul class="dropdown-menu">
+                    @if (Session["Username"] == null)
+                    {
+                        <li><a href="@Url.Action("Login", "Account")">Đăng Nhập</a></li>
+                        <li><a href="@Url.Action("Register", "Account")">Đăng Ký</a></li>
+                    }
+                    else
+                    {
+                        <li><a style="color:palevioletred" href="#"> Welcome!</a></li>
+                        <li>@Html.ActionLink("Đăng xuất", "Logout", "Account")</li>
+                    }
+
+
+
+                </ul>
+            </div>
+            <div><p>ㅤ</p></div>
+            <div>
+
+                <button class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.ActionLink("Giỏ Hàng", "Index", "Cart")
+                    </li>
+                </button>
+            </div>
+
+    </nav>
+    <div class="container body-content">
+        @RenderBody()<hr />
+        <footer class="footer" style="margin-top:10px">
+            <div class="footer-col">
+                <p class="title"><strong>Tổng đài hỗ trợ</strong></p>
+                <p class="line"><span>Gọi hỗ trợ:&nbsp;</span><a>0941142005</a></p>
+                <p class="line"><span>Complain:&nbsp;</span><a>0941142005</a></p>
+                <p class="line"><span>Bảo Hành:&nbsp;</span><a>0941142005</a></p>
+            </div>
+            <div class="footer-col">
+
+                <p class="title"><strong>Tổng đài hỗ trợ</strong></p>
+                <ul>
+                    <li><a href="#>">About Company</a></li>
+                    <li><a href="#>">Recruitment</a></li>
+                    <li><a href="#>">send comments, Complain </a></li>
+                    <li><a href="#>">Find Store</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <p class="title"><strong>Another Information</strong></p>
+                <ul>
+                    <li><a href="#>">Tích Điểm</a></li>
+                    <li><a href="#>">Lịch Sử Mua</a></li>
+                    <li><a href="#>">Dịch Vụ Vệ Sinh</a></li>
+                    <li><a href="#>">Tìm Hiểu Trả Góp</a></li>
+                    <li><a href="#>">Chính sách bảo hành</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <p class="title"><strong>THÔNG TIN LIÊN HỆ</strong></p>
+                <p class="line"><span>TRỤ SỞ:&nbsp;</span><a>828 Đ. Sư Vạn Hạnh</a></p>
+                <p class="line"><span>EMAIL:&nbsp;</span><a>huflit.com.vn</a></p>
+                <p class="line"><span>WEBSITE:&nbsp;</span><a>https://huflit.edu.vn/</a></p>
+            </div>
+        </footer>
+        <style>
+            .footer {
+                padding: 15px 0px;
+                font-size: 16px;
+            }
+
+                .footer .footer-col {
+                    text-align: center;
+                }
+
+            .footer-col {
+                float: left;
+                width: 24%;
+            }
+
+                .footer-col ul {
+                    list-style: none;
+                    margin-bottom: 8px;
+                }
+
+                .footer-col a {
+                    text-decoration: none;
+                    color: black;
+                }
+        </style>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

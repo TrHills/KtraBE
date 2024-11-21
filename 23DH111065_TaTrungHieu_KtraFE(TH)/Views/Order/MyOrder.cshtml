@@ -1,0 +1,173 @@
+﻿@model IEnumerable<_23DH111065_TaTrungHieu_KtraFE_TH_.Models.Order>
+
+
+@{
+    ViewBag.Title = "MyOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function addToCart(productId) {
+            $.ajax({
+                url: '@Url.Action("AddToCart", "Cart")', // Đường dẫn đến action AddToCart trong CartController
+                type: 'POST',
+                data: { productId: productId },
+                success: function (result) {
+                    alert('Sản phẩm đã được thêm vào giỏ hàng!');
+                },
+                error: function () {
+                    alert('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.');
+                }
+            });
+        }
+    </script>
+}
+
+
+
+<h2>Đơn Hàng Của Tôi</h2>
+<div>
+    <h3>Tìm Kiếm Đơn Hàng</h3>
+    @using (Html.BeginForm("MyOrder", "Order", FormMethod.Get))
+    {
+        <input type="text" name="searchString" placeholder="Mã đơn hàng hoặc Tên sản phẩm" />
+        <input type="submit" value="Tìm kiếm" />
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <p>BẠN CHƯA CÓ ĐƠN HÀNG NÀO. HÃY ĐẶT ĐƠN NGAY.</p>
+    <a href="@Url.Action("Index", "Home")">Quay về trang chủ</a>
+}
+else
+{
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#allOrders">Tất cả đơn</a></li>
+        <li><a data-toggle="tab" href="#pendingOrders">Chờ thanh toán</a></li>
+        <li><a data-toggle="tab" href="#processingOrders">Đang xử lý</a></li>
+        <li><a data-toggle="tab" href="#shippingOrders">Đang vận chuyển</a></li>
+        <li><a data-toggle="tab" href="#deliveredOrders">Đã giao</a></li>
+        <li><a data-toggle="tab" href="#canceledOrders">Đã hủy</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="allOrders" class="tab-pane fade in active">
+            <h3>Tất cả đơn hàng</h3>
+            @foreach (var order in Model)
+            {
+                <div>
+                    <h4>Mã Đơn Hàng: @order.OrderID</h4>
+                    <p>Trạng thái: @order.PaymentStatus</p>
+                    <p>Tổng tiền: @order.TotalAmount.ToString("C")</p>
+                    <a href="@Url.Action("Details", "Product", new { id = order.OrderID })">Xem chi tiết</a>
+                    <button onclick="addToCart(@order.OrderDetails.First().ProductID)">Mua lại</button>
+                </div>
+            }
+        </div>
+
+        <div id="pendingOrders" class="tab-pane fade">
+            <h3>Chờ thanh toán</h3>
+            @{var pendingOrders = Model.Where(o => o.PaymentStatus == "Chờ thanh toán").Take(2).ToList();
+            }
+            @foreach (var order in pendingOrders)
+            {
+                <div>
+                    <h4>Mã Đơn Hàng: @order.OrderID</h4>
+                    <p>Trạng thái: @order.PaymentStatus</p>
+                    <p>Tổng tiền: @order.TotalAmount.ToString("C")</p>
+                    <a href="@Url.Action("Details", "Product", new { id = order.OrderID })">Xem chi tiết</a>
+                    <button onclick="addToCart(@order.OrderDetails.First().ProductID)">Mua lại</button>
+                </div>
+            }
+            @if (Model.Count(o => o.PaymentStatus == "Chờ thanh toán") > 2)
+            {
+                <a href="@Url.Action("MyOrder", new { status = "pending" })">Xem thêm</a>
+            }
+        </div>
+
+        <div id="processingOrders" class="tab-pane fade">
+            <h3>Đang xử lý</h3>
+            @{var processingOrders = Model.Where(o => o.PaymentStatus == "Đang xử lý").Take(2);
+            }
+            @foreach (var order in processingOrders)
+            {
+                <div>
+                    <h4>Mã Đơn Hàng: @order.OrderID</h4>
+                    <p>Trạng thái: @order.PaymentStatus</p>
+                    <p>Tổng tiền: @order.TotalAmount.ToString("C")</p>
+                    <a href="@Url.Action("Details", "Product", new { id = order.OrderID})">Xem chi tiết</a>
+                    <button onclick="addToCart(@order.OrderDetails.First().ProductID)">Mua lại</button>
+                </div>
+            }
+            @if (Model.Count(o => o.PaymentStatus == "Đang xử lý") > 2)
+            {
+                <a href="@Url.Action("MyOrder", new { status = "processing" })">Xem thêm</a>
+            }
+        </div>
+
+        <div id="shippingOrders" class="tab-pane fade">
+            <h3>Đang vận chuyển</h3>
+            @{var shippingOrders = Model.Where(o => o.PaymentStatus == "Đang vận chuyển").Take(2);
+            }
+            @foreach (var order in shippingOrders)
+            {
+                <div>
+                    <h4>Mã Đơn Hàng: @order.OrderID</h4>
+                    <p>Trạng thái: @order.PaymentStatus</p>
+                    <p>Tổng tiền: @order.TotalAmount.ToString("C")</p>
+                    <a href="@Url.Action("Details", "Product", new { id = order.OrderID })">Xem chi tiết</a>
+                    <button onclick="addToCart(@order.OrderDetails.First().ProductID)">Mua lại</button>
+                </div>
+            }
+            @if (Model.Count(o => o.PaymentStatus == "Đang vận chuyển") > 2)
+            {
+                <a href="@Url.Action("MyOrder", new { status = "shipping" })">Xem thêm</a>
+            }
+        </div>
+
+        <div id="deliveredOrders" class="tab-pane fade">
+            <h3>Đã giao</h3>
+            @{var deliveredOrders = Model.Where(o => o.PaymentStatus == "Đã giao").Take(2);
+            }
+            @foreach (var order in deliveredOrders)
+            {
+                <div>
+                    <h4>Mã Đơn Hàng: @order.OrderID</h4>
+                    <p>Trạng thái: @order.PaymentStatus</p>
+                    <p>Tổng tiền: @order.TotalAmount.ToString("C")</p>
+                    <a href="@Url.Action("Details", "Product", new { id = order.OrderID })">Xem chi tiết</a>
+                    <button onclick="addToCart(@order.OrderDetails.First().ProductID)">Mua lại</button>
+                </div>
+            }
+            @if (Model.Count(o => o.PaymentStatus == "Đã giao") > 2)
+            {
+                <a href="@Url.Action("MyOrder", new { status = "delivered" })">Xem thêm</a>
+            }
+        </div>
+
+        <div id="canceledOrders" class="tab-pane fade">
+            <h3>Đã hủy</h3>
+            @{var canceledOrders = Model.Where(o => o.PaymentStatus == "Đã hủy").Take(2);
+            }
+            @foreach (var order in canceledOrders)
+            {
+                <div>
+                    <h4>Mã Đơn Hàng: @order.OrderID</h4>
+                    <p>Trạng thái: @order.PaymentStatus</p>
+                    <p>Tổng tiền: @order.TotalAmount.ToString("C")</p>
+                    <a href="@Url.Action("Details", "Product", new { id = order.OrderID })">Xem chi tiết</a>
+                    <button onclick="addToCart(@order.OrderDetails.First().ProductID)">Mua lại</button>
+                </div>
+            }
+            @if (Model.Count(o => o.PaymentStatus == "Đã hủy") > 2)
+            {
+                <a href="@Url.Action("MyOrder", new { status = "canceled" })">Xem thêm</a>
+            }
+        </div>
+    </div>
+}
+
+}
+
